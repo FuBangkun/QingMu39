@@ -1,0 +1,28 @@
+[
+  {
+    "icon": "Book",
+    "name": "什么是Vocaloid",
+    "link": "https://mzh.moegirl.org.cn/VOCALOID"
+  },
+  {
+    "icon": "CompactDisc",
+    "name": "清沐の歌单",
+    "link": "https://music.163.com/playlist?id=13757047519"
+  },
+  {
+    "icon": "Fire",
+    "name": "PJSK表情生成",
+    "link": "https://pjsk.moe/zh-cn/sticker-maker/"
+  },
+  {
+    "icon": "LaptopCode",
+    "name": "工程转换",
+    "link": "https://sdercolin.github.io/utaformatix3/"
+  },
+  {
+    "icon": "Qrcode",
+    "name": "赞助我吧！",
+    "link": "",
+    "donate": "images/donate/qr.png"
+  }
+]

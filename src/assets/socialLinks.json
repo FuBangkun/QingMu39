@@ -1,0 +1,26 @@
+[
+  {
+    "name": "BiliBili",
+    "icon": "/images/icon/bilibili.png",
+    "tip": "(゜-゜)つロ 干杯~",
+    "url": "https://space.bilibili.com/487092994"
+  },
+  {
+    "name": "抖音",
+    "icon": "/images/icon/douyin.png",
+    "tip": "来抖音找我玩",
+    "url": "https://www.douyin.com/user/MS4wLjABAAAAC4OEMmA9ito6EUZwSHNw2pZQ7e5pqEPH3EJhDEfs3jqiT4EwydjMLiD2QMVrZYy0"
+  },
+  {
+    "name": "QQ",
+    "icon": "/images/icon/qq.png",
+    "tip": "来 QQ 找我玩",
+    "url": "https://qm.qq.com/q/XuiQGJLZyU"
+  },
+  {
+    "name": "Email",
+    "icon": "/images/icon/email.png",
+    "tip": "来封 Email ~",
+    "url": "https://mail.google.com/mail/?view=cm&fs=1&to=qingmu39mikufan@gmail.com"
+  }
+]

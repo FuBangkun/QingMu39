@@ -1,0 +1,1545 @@
+/* ===== 页面布局与组件样式（由各 .vue 的 scoped 样式移植） ===== */
+
+/* ---------- #main 主界面（原 App.vue） ---------- */
+#main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(1.2);
+  transition: transform 0.3s;
+  animation: fade-blur-main-in 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: 0.5s;
+}
+#main .container {
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 0 0.5vw;
+}
+@media (max-width: 1200px) {
+  #main .container {
+    padding: 0 2vw;
+  }
+}
+#main .all {
+  width: 100%;
+  height: 100%;
+  padding: 0 0.75rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-height: 720px) {
+  #main {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  #main .container {
+    height: 721px;
+    padding-left: 0.5vw;
+    padding-right: 0.25vw;
+  }
+}
+@media (max-width: 390px) {
+  #main {
+    overflow-x: auto;
+  }
+  #main .container {
+    width: 391px;
+  }
+}
+
+/* ---------- 移动端菜单按钮 ---------- */
+.menu {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 84%;
+  left: calc(50% - 28px);
+  width: 56px;
+  height: 34px;
+  background: rgb(0 0 0 / 20%);
+  backdrop-filter: blur(10px);
+  border: none;
+  border-radius: 6px;
+  transition: transform 0.3s;
+  animation: fade 0.5s;
+  cursor: pointer;
+}
+.menu:active {
+  transform: scale(0.95);
+}
+@media (min-width: 721px) {
+  .menu {
+    display: none;
+  }
+}
+@media (max-height: 720px) {
+  .menu {
+    top: 605.64px;
+    left: calc(50% - 28px);
+  }
+}
+@media (max-width: 390px) {
+  .menu {
+    left: 167.5px;
+  }
+}
+
+/* ---------- 左右栏（原 Left/Right 视图） ---------- */
+.all .left {
+  width: 50%;
+  min-width: 0;
+  margin-right: 10px;
+  transform: translateY(20px);
+}
+.all .left.hidden {
+  display: none;
+}
+@media (max-width: 720px) {
+  .all .left {
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
+.all .right {
+  width: 50%;
+  min-width: 0;
+  margin-left: 0.75rem;
+}
+.all .right.hidden {
+  display: none;
+}
+@media (max-width: 720px) {
+  .all .right {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* 右栏功能区（原 Func） */
+.func {
+  height: 165px;
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.func .func__col {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+}
+.func .time.cards {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  text-align: center;
+  animation: fade 0.5s;
+}
+.func .time.cards .date {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+.func .time.cards .text {
+  margin-top: 10px;
+  font-size: 3.25rem;
+  letter-spacing: 2px;
+  font-family: "UnidreamLED", serif;
+  /* 防止数字溢出卡片 */
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.func .time.cards .weather {
+  text-align: center;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+@media (min-width: 1201px) and (max-width: 1280px) {
+  .func .time.cards {
+    font-size: 1rem;
+  }
+}
+@media (min-width: 911px) and (max-width: 992px) {
+  .func .time.cards {
+    font-size: 1rem;
+  }
+  .func .time.cards .text {
+    font-size: 2.75rem;
+  }
+}
+
+/* ---------- 移动端：功能区改为上下堆叠 + 时钟分级缩放（修复窄屏溢出） ---------- */
+@media (max-width: 910px) {
+  .func .time.cards {
+    font-size: 1rem;
+    padding: 16px 14px;
+  }
+  .func .time.cards .text {
+    font-size: 2.6rem;
+    letter-spacing: 1px;
+  }
+}
+@media (max-width: 720px) {
+  .func {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    gap: 12px;
+  }
+  .func .func__col {
+    height: auto;
+  }
+  .func .time.cards {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+  .func .time.cards .text {
+    font-size: 2.3rem;
+  }
+}
+@media (max-width: 560px) {
+  .func .time.cards .date .sm-hidden {
+    /* 窄屏隐藏星期，避免日期行溢出 */
+    display: none;
+  }
+  .func .time.cards .text {
+    font-size: 2rem;
+    letter-spacing: 0;
+  }
+}
+@media (max-width: 390px) {
+  .func .time.cards .text {
+    font-size: 1.75rem;
+  }
+}
+
+/* ---------- Background 壁纸（原 Background.vue） ---------- */
+.cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: 0.25s;
+  z-index: -1;
+}
+.cover.show {
+  z-index: 1;
+}
+.cover .bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  backface-visibility: hidden;
+  filter: blur(20px) brightness(0.3);
+  transition: filter 0.3s, transform 0.3s;
+  animation: fade-blur-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: 0.45s;
+}
+.cover .gray {
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.5) 100%),
+    radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 0.3) 166%);
+  transition: 1.5s;
+}
+.cover .gray.hidden {
+  opacity: 0;
+  transition: 1.5s;
+}
+.cover .down {
+  font-size: 16px;
+  color: white;
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 26px;
+  border-radius: 8px;
+  background-color: #00000030;
+  width: 120px;
+  height: 30px;
+}
+.cover .down:hover {
+  transform: scale(1.05);
+  background-color: #00000060;
+}
+.cover .down:active {
+  transform: scale(1);
+}
+
+/* ---------- Message 简介（原 Message.vue） ---------- */
+.message .logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  animation: fade 0.5s;
+  max-width: 460px;
+}
+.message .logo .logo-img {
+  border-radius: 50%;
+  width: 120px;
+}
+.message .logo .name {
+  width: 100%;
+  padding-left: 22px;
+  transform: translateY(-8px);
+  font-family: "Pacifico-Regular", serif;
+}
+.message .logo .name .bg {
+  font-size: 5rem;
+}
+.message .logo .name .sm {
+  margin-left: 6px;
+  font-size: 2rem;
+}
+@media (min-width: 721px) and (max-width: 789px) {
+  .message .logo .name .sm {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .message .logo .logo-img {
+    width: 100px;
+  }
+  .message .logo .name {
+    height: 128px;
+  }
+  .message .logo .name .bg {
+    font-size: 4.5rem;
+  }
+}
+@media (max-width: 720px) {
+  .message .logo {
+    max-width: 100%;
+  }
+}
+.message .description {
+  padding: 1rem;
+  margin-top: 3.5rem;
+  max-width: 460px;
+  animation: fade 0.5s;
+}
+.message .description .content {
+  display: flex;
+  justify-content: space-between;
+}
+.message .description .content .quote-right {
+  align-self: flex-end;
+  flex-shrink: 0;
+}
+.message .description .content > svg {
+  flex-shrink: 0;
+}
+.message .description .content .text {
+  margin: 0.75rem auto 0.75rem 1rem;
+  line-height: 2.1rem;
+  transition: opacity 0.2s;
+  white-space: pre-line;
+  font-family: "LXGW WenKai", "Ma Shan Zheng", sans-serif;
+  font-size: 1.1rem;
+}
+.message .description .content .text p:nth-of-type(1) {
+  font-size: 1.3rem;
+}
+@media (max-width: 720px) {
+  .message .description {
+    max-width: 100%;
+    pointer-events: none;
+  }
+}
+
+/* ---------- SocialLinks 社交（原 SocialLinks.vue） ---------- */
+.social {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 460px;
+  width: 100%;
+  height: 42px;
+  background-color: transparent;
+  border-radius: 6px;
+  backdrop-filter: blur(0);
+  animation: fade 0.5s;
+  transition: background-color 0.3s, backdrop-filter 0.3s;
+}
+@media (max-width: 840px) {
+  .social {
+    max-width: 100%;
+    justify-content: center;
+  }
+  .social .link {
+    justify-content: space-evenly !important;
+    width: 90%;
+  }
+  .social .tip {
+    display: none !important;
+  }
+}
+.social .link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.social .link a {
+  display: inherit;
+}
+.social .link a .icon {
+  margin: 0 12px;
+  transition: transform 0.3s;
+}
+.social .link a .icon:hover {
+  transform: scale(1.1);
+}
+.social .link a .icon:active {
+  transform: scale(1);
+}
+.social .tip {
+  display: none;
+  margin-right: 12px;
+  animation: fade 0.5s;
+}
+@media (min-width: 768px) {
+  .social:hover {
+    background-color: #00000040;
+    backdrop-filter: blur(5px);
+  }
+  .social:hover .tip {
+    display: block;
+  }
+}
+
+/* ---------- Hitokoto 一言（原 Hitokoto.vue） ---------- */
+/* 打开播放器卡片 */
+.player-entry {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  margin-bottom: 14px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  letter-spacing: 1px;
+  line-height: 1;
+  cursor: pointer;
+  border: none;
+  user-select: none;
+}
+.player-entry span {
+  transition: opacity 0.3s;
+}
+.player-entry:hover span {
+  opacity: 0.7;
+}
+.player-entry.active {
+  color: #6ce3e1;
+}
+
+.hitokoto {
+  position: relative;
+  width: 100%;
+  height: 165px;
+  padding: 20px;
+  animation: fade 0.5s;
+}
+.hitokoto .open-music {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: #00000026;
+  padding: 4px 0;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+}
+.hitokoto .open-music.open-music--show {
+  display: flex;
+}
+.hitokoto .open-music span {
+  font-size: 0.95rem;
+}
+.hitokoto .content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  cursor: pointer;
+}
+.hitokoto .content .text {
+  font-size: 1.1rem;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.hitokoto .content .from {
+  margin-top: 10px;
+  font-weight: bold;
+  align-self: flex-end;
+  font-size: 1.1rem;
+}
+
+/* ---------- Music 音乐（原 Music.vue） ---------- */
+.music {
+  width: 100%;
+  height: 165px;
+  background: #00000040;
+  backdrop-filter: blur(10px);
+  border-radius: 6px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fade 0.5s;
+}
+.music .btns {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.music .btns span {
+  background: #ffffff26;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin: 0 6px;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.music .btns span:hover {
+  background: #ffffff4d;
+}
+.music .control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.music .control .ctrl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  transform: scale(1);
+  cursor: pointer;
+}
+.music .control .ctrl:hover {
+  background: #ffffff33;
+}
+.music .control .ctrl:active {
+  transform: scale(0.95);
+}
+.music .control .ctrl--state {
+  width: 50px;
+  height: 50px;
+}
+.music .music-menu {
+  height: 26px;
+  width: 100%;
+  line-height: 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.music .music-menu .name {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+  animation: fade 0.3s;
+}
+.music .music-menu .name span {
+  display: inline-block;
+}
+.music .music-menu .name.scrolling {
+  text-align: left;
+}
+.music .music-menu .name.scrolling .name__track {
+  display: inline-block;
+  white-space: nowrap;
+  animation: music-scroll 8s linear infinite;
+}
+.music .music-menu .name.scrolling .name__track > span {
+  display: inline-block;
+  padding-right: 40px;
+}
+@keyframes music-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.music .music-menu .volume {
+  width: 100%;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  animation: fade 0.3s;
+}
+.music .music-menu .volume .icon {
+  margin-right: 12px;
+}
+.music .music-menu .volume .ui-slider {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+}
+
+/* 播放列表弹窗 */
+.music-list {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  background-color: #00000080;
+  backdrop-filter: blur(20px);
+  z-index: 3000;
+}
+.music-list .list {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: calc(50% - 300px);
+  left: calc(50% - 320px);
+  width: 640px;
+  height: 600px;
+  background-color: #ffffff66;
+  border-radius: 6px;
+  z-index: 3001;
+  padding: 48px 16px 24px;
+}
+.music-list .playlist-bar {
+  width: calc(100% - 40px);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  color: #222;
+  text-align: center;
+}
+.music-list .playlist-bar__music {
+  margin-bottom: 6px;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.music-list .playlist-bar__lrc {
+  min-height: 22px;
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.55);
+}
+@media (max-width: 720px) {
+  .music-list .list {
+    left: calc(50% - 45%);
+    width: 90%;
+  }
+}
+.music-list .close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  display: block;
+  cursor: pointer;
+}
+.music-list .close:hover {
+  transform: scale(1.2);
+}
+.music-list .close:active {
+  transform: scale(0.95);
+}
+.music-list .playlist {
+  width: calc(100% - 80px);
+  max-height: 400px;
+  overflow-y: auto;
+  color: #333;
+}
+.music-list .playlist .playlist__title {
+  text-align: center;
+  margin-bottom: 12px;
+  color: #222;
+  font-size: 1.2rem;
+}
+.music-list .playlist ul {
+  list-style: none;
+}
+.music-list .playlist li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  color: #222;
+  cursor: pointer;
+}
+.music-list .playlist li:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+.music-list .playlist li.playlist__item--active {
+  background: rgba(0, 0, 0, 0.25);
+}
+.music-list .playlist .playlist__num {
+  width: 24px;
+  text-align: center;
+  flex: none;
+}
+.music-list .playlist .playlist__name {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.music-list .playlist .playlist__artist {
+  flex: none;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+/* ---------- Links 网站列表（原 Links.vue） ---------- */
+.links .line {
+  margin: 2rem 0.25rem 1rem;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  animation: fade 0.5s;
+}
+.links .line .title {
+  margin-left: 8px;
+  font-size: 1.15rem;
+  text-shadow: 0 0 5px #00000050;
+}
+.links .link-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  margin: 0 -10px;
+  min-height: 220px; /* 固定为两行高：条数不足时页面高度也保持一致 */
+}
+.links .link-grid .item {
+  height: 100px;
+  width: calc((100% - 60px) / 3);
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0 10px;
+  animation: fade 0.5s;
+  cursor: pointer;
+}
+.links .link-grid .item:hover {
+  transform: scale(1.02);
+  background: rgb(0 0 0 / 40%);
+  transition: 0.3s;
+}
+.links .link-grid .item:active {
+  transform: scale(1);
+}
+.links .link-grid .item .name {
+  font-size: 1.1rem;
+  margin-left: 8px;
+}
+@media (min-width: 720px) and (max-width: 820px) {
+  .links .link-grid .item .name {
+    display: none;
+  }
+}
+@media (max-width: 720px) {
+  .links .link-grid .item {
+    height: 80px;
+  }
+}
+@media (max-width: 460px) {
+  .links .link-grid .item {
+    flex-direction: column;
+  }
+  .links .link-grid .item .name {
+    font-size: 1rem;
+    margin-left: 0;
+    margin-top: 8px;
+  }
+}
+.links .pager {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.links .pager .pager__dot {
+  width: 20px;
+  height: 4px;
+  margin: 0 4px;
+  border-radius: 4px;
+  background-color: #fff;
+  opacity: 0.2;
+  transition: opacity 0.3s;
+  cursor: pointer;
+}
+.links .pager .pager__dot--active,
+.links .pager .pager__dot:hover {
+  opacity: 1;
+}
+
+/* ---------- Footer 页脚（原 Footer.vue） ---------- */
+#footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 46px;
+  line-height: 46px;
+  text-align: center;
+  z-index: 0;
+  font-size: 14px;
+  word-break: keep-all;
+  white-space: nowrap;
+}
+#footer .power {
+  animation: fade 0.3s;
+}
+#footer .lrc {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+#footer .lrc .lrc-all {
+  width: 98%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+#footer .lrc .lrc-text {
+  margin: 0 8px;
+}
+#footer.blur {
+  backdrop-filter: blur(10px);
+  background: rgb(0 0 0 / 25%);
+  font-size: 16px;
+}
+@media (max-width: 720px) {
+  #footer {
+    font-size: 0.9rem;
+  }
+  #footer.blur {
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 560px) {
+  #footer .c-hidden {
+    display: none;
+  }
+}
+@media (max-width: 480px) {
+  #footer .hidden {
+    display: none;
+  }
+}
+
+/* ---------- Loading 加载动画（原 Loading.vue） ---------- */
+#loader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  overflow: hidden;
+}
+#loader-wrapper .loader {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#loader-wrapper .loader .loader-circle {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #fff;
+  animation: spin 1.8s linear infinite;
+  z-index: 2;
+}
+#loader-wrapper .loader .loader-circle:before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #a4a4a4;
+  animation: spin-reverse 0.6s linear infinite;
+}
+#loader-wrapper .loader .loader-circle:after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #d3d3d3;
+  animation: spin 1s linear infinite;
+}
+#loader-wrapper .loader .loader-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  z-index: 2;
+  margin-top: 40px;
+  font-size: 24px;
+}
+#loader-wrapper .loader .loader-text .tip {
+  margin-top: 6px;
+  font-size: 18px;
+  opacity: 0.6;
+}
+#loader-wrapper .loader-section {
+  position: fixed;
+  top: 0;
+  width: 51%;
+  height: 100%;
+  background: #333;
+  z-index: 1;
+}
+#loader-wrapper .loader-section.section-left {
+  left: 0;
+}
+#loader-wrapper .loader-section.section-right {
+  right: 0;
+}
+#loader-wrapper.loaded {
+  visibility: hidden;
+  transform: translateY(-100%);
+  transition: transform 0.3s 1s ease-out, visibility 0.3s 1s ease-out;
+}
+#loader-wrapper.loaded .loader .loader-circle,
+#loader-wrapper.loaded .loader .loader-text {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+#loader-wrapper.loaded .loader-section.section-left {
+  transform: translateX(-100%);
+  transition: transform 0.5s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+#loader-wrapper.loaded .loader-section.section-right {
+  transform: translateX(100%);
+  transition: transform 0.5s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* ---------- TimeCapsule 时光胶囊（原 TimeCapsule.vue） ---------- */
+.time-capsule {
+  width: 100%;
+}
+.time-capsule .title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0.2rem 0 1.5rem;
+  font-size: 1.1rem;
+}
+.time-capsule .title svg {
+  margin-right: 6px;
+}
+.time-capsule .capsule-item {
+  margin-bottom: 1rem;
+}
+.time-capsule .capsule-item .item-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0 0.5rem;
+  font-size: 0.95rem;
+}
+.time-capsule .capsule-item .item-title .remaining {
+  opacity: 0.6;
+  font-size: 0.85rem;
+  font-style: oblique;
+}
+.time-capsule .capsule-item:last-child {
+  margin-bottom: 0;
+}
+.time-capsule .capsule-item.start .item-title {
+  justify-content: center;
+  opacity: 0.8;
+  font-size: 0.85rem;
+}
+
+/* ---------- MoreContent 更多内容（原 MoreContent.vue） ---------- */
+.more-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+  height: 100%;
+}
+.more-content .welcome {
+  text-align: center;
+  color: #fff;
+}
+.more-content .welcome .hi {
+  font-size: 1.2rem;
+  margin-bottom: 0.6rem;
+  text-shadow: 0 0 5px #00000060;
+}
+.more-content .welcome .sub {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* ---------- 设置弹层遮罩（原 App.vue .more） ---------- */
+.more {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00000080;
+  backdrop-filter: blur(20px);
+  z-index: 2;
+  animation: fade 0.5s;
+}
+
+/* ---------- Box 盒子（原 Box/index.vue，展示在右栏位置） ---------- */
+.box {
+  flex: 1 0 0;
+  margin-left: 0.75rem;
+  height: 80%;
+  max-width: 50%;
+  position: relative;
+  animation: fade 0.5s;
+}
+.box.cards:hover {
+  transform: scale(1);
+}
+.box .box-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.box .box-btn--setting {
+  right: 56px;
+}
+.box .box-btn:hover {
+  transform: scale(1.2);
+}
+.box .box-btn:active {
+  transform: scale(1);
+}
+.box .content {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+}
+.box .content .more-content {
+  margin-top: 40px;
+  flex: 1;
+  height: auto;
+}
+
+/* ---------- Set 设置弹层（原 MoreSet/index.vue .set） ---------- */
+.set {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  background: rgb(255 255 255 / 40%);
+  border-radius: 6px;
+  padding: 40px;
+  display: flex;
+  flex-direction: row;
+  overflow-y: auto;
+}
+.set .set-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.set .set-close:hover {
+  transform: scale(1.2);
+}
+.set .set-close:active {
+  transform: scale(1);
+}
+.set .set-col {
+  display: flex;
+  flex-direction: column;
+}
+.set .set-col--left {
+  flex: 1.1;
+  height: 100%;
+  padding: 0 40px;
+  justify-content: center;
+  gap: 24px;
+}
+.set .set-col--right {
+  flex: 1;
+  padding: 0 40px;
+  justify-content: center;
+}
+.set .logo {
+  font-family: "Pacifico-Regular", serif;
+  padding-left: 22px;
+  width: 100%;
+  height: 160px;
+  min-height: 140px;
+}
+.set .logo .bg {
+  font-size: 5rem;
+}
+.set .logo .sm {
+  margin-left: 6px;
+  font-size: 2rem;
+}
+.set .version {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.set .version .num {
+  font-size: 2rem;
+  font-family: "Pacifico-Regular", serif;
+}
+.set .version .github {
+  margin-left: 12px;
+  cursor: pointer;
+}
+.set .version .github:hover {
+  transform: scale(1.2);
+}
+.set .right-title {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+.set .right-title svg {
+  margin-right: 6px;
+}
+
+/* 更新日志卡片（原 Vue 版 MoreSet 的 .update） */
+.set .update {
+  display: flex;
+  flex-direction: column;
+  min-height: 140px;
+  max-height: 40vh;
+  background: rgb(255 255 255 / 12%);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.set .update__header {
+  padding: 12px 18px;
+  font-weight: bold;
+  background: rgb(255 255 255 / 19%);
+}
+.set .update .upnote {
+  flex: 1;
+  min-height: 0;
+  padding: 16px 18px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+.set .update .uptext {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 14px;
+  line-height: 1.4;
+}
+.set .update .uptext:last-child {
+  padding-bottom: 0;
+}
+.set .update .uptext svg {
+  flex: none;
+}
+
+/* 设置面板内部条目 */
+.setting .item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 14px;
+  padding: 10px 0;
+}
+.setting .bg-set {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== 手写 UI 组件样式 ===== */
+
+/* 开关 Toggle（替代 el-switch） */
+.ui-toggle {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+.ui-toggle__core {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #ffffff30;
+  border: 1px solid transparent;
+  transition: background-color 0.2s;
+}
+.ui-toggle--on .ui-toggle__core {
+  background-color: #efefef;
+}
+.ui-toggle__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.2s;
+}
+.ui-toggle--on .ui-toggle__thumb {
+  left: 22px;
+}
+
+/* 单选 RadioGroup（替代 el-radio-group） */
+.ui-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.ui-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: #ffffff26;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+.ui-radio--on {
+  background: #ffffff06;
+  border-color: #eeeeee;
+}
+.ui-radio .ui-radio__inner {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff06;
+  border: 2px solid #eeeeee;
+}
+.ui-radio--on .ui-radio__inner {
+  background-color: #ffffff30;
+  border-color: #fff;
+}
+.ui-radio-group--small .ui-radio {
+  padding: 4px 12px;
+  font-size: 13px;
+  margin: 2px 0;
+}
+
+/* 滑杆 Slider（替代 el-slider） */
+.ui-slider {
+  width: 100%;
+}
+.ui-slider__bar {
+  position: relative;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.ui-slider__runway {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 5px;
+  border-radius: 3px;
+}
+.ui-slider__inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 5px;
+  border-radius: 3px;
+}
+.ui-slider__button {
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 4px rgb(0 0 0 / 40%);
+  transition: 0.1s;
+}
+
+/* 进度条 Progress（替代 el-progress） */
+.ui-progress {
+  width: 100%;
+}
+.ui-progress__outer {
+  width: 100%;
+  height: 20px;
+  border-radius: 6px;
+  background-color: #00000020;
+  overflow: hidden;
+}
+.ui-progress__inner {
+  height: 100%;
+  border-radius: 6px;
+  text-align: center;
+  line-height: 20px;
+  font-family: "UnidreamLED", serif;
+}
+.ui-progress__text {
+  color: #564d59;
+  font-size: 0.9rem;
+}
+
+/* 卡片 Card（替代 el-card） */
+.ui-card {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background-color: transparent;
+  overflow: hidden;
+}
+.ui-card__header {
+  font-weight: bold;
+  padding: 16px 20px;
+  background-color: #ffffff30;
+  border-bottom: 1px solid transparent;
+}
+.ui-card__body {
+  padding: 0;
+  background-color: #ffffff10;
+}
+
+/* 折叠面板 Collapse（替代 el-collapse） */
+.ui-collapse {
+  border-radius: 8px;
+  background-color: #ffffff10;
+  border: 1px solid transparent;
+  overflow: hidden;
+}
+.ui-collapse-item__header {
+  background-color: #ffffff30;
+  color: #fff;
+  font-size: 15px;
+  padding: 14px 18px;
+  border-bottom: 1px solid #ffffff1a;
+  cursor: pointer;
+  user-select: none;
+}
+.ui-collapse-item--active .ui-collapse-item__header {
+  border-bottom-color: transparent;
+}
+.ui-collapse-item__wrap {
+  background-color: #ffffff10;
+}
+.ui-collapse-item__content {
+  padding: 14px 20px;
+}
+
+/* ---------- 404 页面 ---------- */
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.not-found__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 40px 56px;
+  border-radius: 12px;
+  text-align: center;
+  animation: fade 0.5s;
+}
+.not-found__card h1 {
+  margin: 0;
+  font-family: "Pacifico-Regular", serif;
+  font-size: 4.5rem;
+  line-height: 1;
+  opacity: 0.9;
+}
+.not-found__title {
+  font-size: 1.15rem;
+}
+.not-found__desc {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  max-width: 320px;
+  line-height: 1.6;
+}
+.not-found__home {
+  margin-top: 10px;
+  padding: 10px 26px;
+  border-radius: 25px;
+  background: #ffffff26;
+  font-size: 0.95rem;
+  transition:
+    background 0.3s,
+    transform 0.3s;
+}
+.not-found__home:hover {
+  background: #ffffff40;
+  transform: scale(1.03);
+  text-decoration: none;
+}
+.not-found__home:active {
+  transform: scale(0.98);
+}
+
+/* ---------- 赞赏码弹层（照搬原版材质：遮罩 = .more，面板 = .set） ---------- */
+.donate {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00000080;
+  backdrop-filter: blur(20px);
+  animation: fade 0.25s;
+}
+.donate__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 30px 40px;
+  /* 与「更多设置」面板 .set 完全一致 */
+  background: rgb(255 255 255 / 40%);
+  border-radius: 6px;
+  animation: fade 0.3s;
+}
+.donate__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: transform 0.3s;
+}
+.donate__close:hover {
+  transform: scale(1.2);
+  opacity: 1;
+}
+.donate__title {
+  font-family: "Pacifico-Regular", serif;
+  font-size: 1.5rem;
+}
+.donate__qr {
+  width: 260px;
+  max-width: 68vw;
+  height: auto;
+  border-radius: 10px;
+  background: #fff;
+  padding: 6px;
+}
+.donate__tip {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+@media (max-width: 720px) {
+  .donate__qr {
+    width: 200px;
+  }
+}
